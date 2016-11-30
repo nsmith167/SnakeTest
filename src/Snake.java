@@ -26,6 +26,10 @@ public class Snake
         return size;
     }
     
+    public int getThickness()
+    {
+        return head.getThickness();
+    }
     public int getX()
     {
         return x;

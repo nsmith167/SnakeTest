@@ -1,5 +1,6 @@
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +25,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener
     
     public GamePanel()
     {
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
         currApple = new Dot(75, 75, Color.BLACK, 15);
         snake = new Snake(200, 200);
         collided = false;
@@ -52,6 +54,11 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener
         {
             //TODO: add instructions for collision testing and apple placement
             snake.move();
+            if(collided())
+            {
+                System.out.println("Collision!");
+                running = false;
+            }
         }
         
         repaint(); //In this case calls paintComponent()
@@ -88,29 +95,29 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener
     }
    
     //TODO: give some definition to a collision, fix definition of what constitutes a collision
-//    public boolean collided()
-//    {
-//        if(snake.getSize() > 1)
-//        {
-//            for(int i = 1; i < snake.getSize(); i++)
-//            {
-//                if(snake.getX() == snake.getBody().get(i).getX() && snake.getY() == snake.getBody().get(i).getY())
-//                    collided = true;
-//            }
-//        }
-//        if(snake.getX() == 0 || snake.getX() == HEIGHT || snake.getY() == 0 || snake.getY() == HEIGHT)
-//            collided = true;
-//        
-//        return collided;
-//    }
-//    
-//    //TODO: fix definition of how a snake "eats" something
-//    public boolean ate()
-//    {
-//        if(snake.getX() >= currApple.getX() && snake.getX() <= (currApple.getX() + currApple.getThickness()) && snake.getY() >= currApple.getY() && snake.getY() <= (currApple.getY() + currApple.getThickness()))
-//            ate = true;
-//        return ate;
-//    }
+    public boolean collided()
+    {
+        if(snake.getSize() > 1)
+        {
+            for(int i = 1; i < snake.getSize(); i++)
+            {
+                if(snake.getX() == snake.getBody().get(i).getX() && snake.getY() == snake.getBody().get(i).getY())
+                    collided = true;
+            }
+        }
+        if(snake.getX() < 0 || (snake.getX() + snake.getThickness()) > WIDTH || snake.getY() < 0 || (snake.getY() + snake.getThickness()) > HEIGHT)
+            System.out.println("Collided!");;
+        
+        return collided;
+    }
+    
+    //TODO: fix definition of how a snake "eats" something
+    public boolean ate()
+    {
+        if(snake.getX() >= currApple.getX() && snake.getX() <= (currApple.getX() + currApple.getThickness()) && snake.getY() >= currApple.getY() && snake.getY() <= (currApple.getY() + currApple.getThickness()))
+            ate = true;
+        return ate;
+    }
 
     @Override
     public void keyReleased(KeyEvent e) 
@@ -122,10 +129,6 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener
     public void keyTyped(KeyEvent e) 
     {
       //does nothing
-    }
-
-
-    
-    
-    
+    }    
 }
+    
