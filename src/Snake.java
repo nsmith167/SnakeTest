@@ -32,12 +32,12 @@ public class Snake
     }
     public int getX()
     {
-        return x;
+        return head.getX();
     }
     
     public int getY()
     {
-        return y;
+        return head.getY();
     }
     
     public char getDirection()

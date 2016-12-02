@@ -54,6 +54,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener
         {
             //TODO: add instructions for collision testing and apple placement
             snake.move();
+            System.out.println(snake.getX()+","+snake.getY()); //temporary for testing
             if(collided())
             {
                 System.out.println("Collision!");
