@@ -18,13 +18,16 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener
     private Timer timer; 
     private boolean collided; //whether or not the snake collided with something
     private boolean ate; //whether or not the snake ate an apple
+    private int score;
     
+    private final int PADDING = 30; //closest any dot can be to the edge of the panel
     private final int WIDTH = 1000;
     private final int HEIGHT = 800;
     private final int DELAY = 80; //delays the "ticks" of the timer
     
     public GamePanel()
     {
+        score = 0;
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         currApple = new Dot(75, 75, Color.BLACK, 15);
         snake = new Snake(200, 200);
@@ -54,10 +57,15 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener
         {
             //TODO: add instructions for collision testing and apple placement
             snake.move();
+            
             if(collided())
-            {
-                System.out.println("Collision!");
                 running = false;
+            if(ate())
+            {
+                score += 100;
+                currApple.setX(PADDING + (int)(Math.random() * (WIDTH - PADDING - currApple.getThickness())));
+                currApple.setY(PADDING + (int)(Math.random() * (HEIGHT - PADDING - currApple.getThickness())));
+                ate = false;
             }
         }
         
@@ -72,7 +80,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener
     {
         super.paintComponent(g);
         snake.draw(g);
-        //currApple.draw(g);    TODO: make currApple useful, give it location, generate new coordinates, etc
+        currApple.draw(g);    
     }
     
     @Override
@@ -105,15 +113,8 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener
                     collided = true;
             }
         }
-        
-        if(snake.getX() < 0)
-            System.out.println("Collided!");
-        if((snake.getX() + snake.getThickness()) > WIDTH)
-            System.out.println("Collided!");
-        if(snake.getY() < 0)
-            System.out.println("Collided!");
-        if((snake.getY() + snake.getThickness()) > HEIGHT)
-            System.out.println("Collided");
+        if(snake.getX() < 0 || (snake.getX() + snake.getThickness()) > WIDTH || snake.getY() < 0 || (snake.getY() + snake.getThickness()) > HEIGHT)
+            collided = true;
         
         return collided;
     }
@@ -121,8 +122,11 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener
     //TODO: fix definition of how a snake "eats" something
     public boolean ate()
     {
-        if(snake.getX() >= currApple.getX() && snake.getX() <= (currApple.getX() + currApple.getThickness()) && snake.getY() >= currApple.getY() && snake.getY() <= (currApple.getY() + currApple.getThickness()))
+        if((snake.getX() + snake.getThickness()) >= currApple.getX() && snake.getX() <= (currApple.getX() + currApple.getThickness()) && (snake.getY() + snake.getThickness()) >= currApple.getY() && snake.getY() <= (currApple.getY() + currApple.getThickness()))
+        {
             ate = true;
+            snake.grow();
+        }
         return ate;
     }
 
