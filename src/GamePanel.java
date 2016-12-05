@@ -105,8 +105,15 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener
                     collided = true;
             }
         }
-        if(snake.getX() < 0 || (snake.getX() + snake.getThickness()) > WIDTH || snake.getY() < 0 || (snake.getY() + snake.getThickness()) > HEIGHT)
-            System.out.println("Collided!");;
+        
+        if(snake.getX() < 0)
+            System.out.println("Collided!");
+        if((snake.getX() + snake.getThickness()) > WIDTH)
+            System.out.println("Collided!");
+        if(snake.getY() < 0)
+            System.out.println("Collided!");
+        if((snake.getY() + snake.getThickness()) > HEIGHT)
+            System.out.println("Collided");
         
         return collided;
     }

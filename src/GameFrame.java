@@ -11,6 +11,8 @@ public class GameFrame extends JFrame
         getContentPane().add(gPanel);
         setSize(1000, 800);
         setResizable(false); //user can't change frame size
+        pack();
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
