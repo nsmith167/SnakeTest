@@ -104,7 +104,7 @@ public class Snake
     */
     public void grow()  
     {
-        body.add(new Dot(0, 0, head.getColor(), 15)); //should not be visible until move() is called
+        body.add(new Dot(-100, -100, head.getColor(), 15)); //should not be visible until move() is called
         size++;
     }
     

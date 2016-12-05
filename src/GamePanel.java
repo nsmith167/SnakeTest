@@ -98,8 +98,6 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener
             snake.setDirection('l');
         else if(e.getKeyCode() == KeyEvent.VK_RIGHT && snake.getDirection() != 'l')
             snake.setDirection('r'); 
-        else if(e.getKeyCode() == KeyEvent.VK_SPACE)  //TODO: remove this, currently only here to test growth
-            snake.grow();
     }
    
     //TODO: give some definition to a collision, fix definition of what constitutes a collision
